@@ -1,0 +1,35 @@
+/*Primera seccion, librerias */
+package calc.compi_1_ejercicio_ll1;
+
+/*Segunda seccion, config*/
+%%
+%class exercise
+%standalone
+%unicode
+%line
+%public
+%column
+
+%{
+////////////////
+%}
+
+
+SEPARADORES = [ \r\t\b\f\n]
+DIGITO =  [[:digit:]]+ ("." [[:digit:]]+)?
+IDENTIFICADOR =  [a-zA-Z]+
+
+%%
+
+/*Tercera accion, expresiones*/
+<YYINITIAL>{
+    {DIGITO}	{ return new Symbol(NUM, yytext(), yyline + 1, yycolumn + 1); }
+    {IDENTIFICADOR}	 { return new Symbol(ID, yytext(), yyline + 1, yycolumn + 1); }
+    "+"	{ return new Symbol(SUMA, yyline + 1, yycolumn+1);  }
+    "*"	{ return new Symbol(POR, yyline + 1, yycolumn+1);  }
+    "("	{ return new Symbol(PAR_A, yyline + 1, yycolumn+1);  }
+    ")"	{ return new Symbol(PAR_C, yyline + 1, yycolumn+1);  }
+    {SEPARADORES}   {/*  */}
+}
+
+[^] {}
